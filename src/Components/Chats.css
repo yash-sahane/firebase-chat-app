@@ -1,0 +1,98 @@
+.chats {
+    background-color: #fefefe;
+    padding: 20px 20px 0 20px;
+    width: 35%;
+    border-radius: 30px 0 0 30px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgb(229, 229, 229);
+}
+
+.users_chats {
+    flex: 1;
+}
+
+.users_chat {
+    background-color: #ffffff;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 5px;
+    margin: 15px 0;
+    padding: 10px 15px;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+}
+
+.users_chat_vr_div {
+    position: absolute;
+    content: "";
+    width: 3px;
+    height: 100px;
+    background: linear-gradient(0deg, #0395de 0%, #5d24c6 35%, #c50272 100%);
+    top: 0;
+    left: 0;
+}
+
+.users_chat_vr {
+    content: "";
+    height: 100%;
+    width: 2px;
+    background: linear-gradient(90deg, #177bd6, #7b06a9, #e40253);
+}
+
+.users_chat_info {
+    display: flex;
+    align-items: center;
+}
+
+.users_chat_info p {
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.users_chat_img_name_div {
+    /* display: flex;
+    align-items: center;
+    justify-content: space-between; */
+}
+.user_chat_profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.user_chat_img_name {
+    gap: 10px;
+    justify-content: space-between;
+}
+.users_chat_lastMsgTime {
+    font-weight: 400 !important;
+}
+.user_chat_img_name p {
+    font-weight: 600;
+}
+
+.no_user_chat {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.user_chat_img_name {
+    display: flex;
+    align-items: center;
+}
+p {
+    font-size: 14px;
+}
+
+.users_chat_lastMsgTime {
+    font-size: 12px;
+    color: #9c9a9a;
+}
+
+.users_chat_lastMsg {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #9c9a9a;
+}

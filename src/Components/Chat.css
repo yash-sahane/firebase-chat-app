@@ -1,0 +1,20 @@
+.user_chat_active {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat_user_profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-bottom: 1px solid rgb(229, 229, 229);
+}
+
+.no_user_chat {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

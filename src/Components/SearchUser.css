@@ -1,0 +1,20 @@
+.search_user {
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    margin-top: 15px;
+    border: 1px solid rgb(229, 229, 229);
+    background-color: white;
+}
+
+.search_user input {
+    border: none;
+    outline: none;
+    padding: 3px;
+    background-color: transparent;
+}
+
+.search_user_icon {
+    margin: 0 6px;
+}

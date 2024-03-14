@@ -1,0 +1,145 @@
+.signup_main{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.signup_absolute{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.heading_border{
+    content: '';
+    height: 2px;
+    width: 20px;
+    background-color: #185dd2;
+    margin: 5px 0 20px 0;
+}
+
+.signup{
+    display: flex;
+    width: 100%;
+    height: 75%;
+    /* border-radius: 30px; */
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 7px 20px;
+    max-width: 750px;
+    min-width: 100%;
+}
+
+.signup_left{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup_left img{
+    /* border-radius: 30px 0 0 30px; */
+}
+.signup_right{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding: 30px;
+    justify-content: center;
+    background-color: white;
+}
+
+.sidebar_signup_img{
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.signup_right input{
+    padding: 5px;
+    margin: 5px 0 10px 0;
+    border-radius: 3px;
+    outline: none;
+    border-bottom: 1px solid;
+    border: 2px solid #aea5a5;
+    transition: ease-in-out, border .35s ease-in-out;
+}
+
+.signup_right input:focus{
+    border: 2px solid #185dd2;
+}
+
+label{
+    font-size: 14px;
+    color: black;
+    font-weight: 500;
+}
+
+.avatar_label{
+    display: flex;
+    align-items: center;
+    margin: 5px 0 10px 0;
+    cursor: pointer;
+}
+
+.avatar_label img{
+    width: 30px;
+}
+
+.signup_main_left_img {
+    position: absolute;
+    width: 50vw;
+    height: 100vh;
+}
+
+.signup_main_left_img img {
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(8px);
+    overflow: hidden;
+    transform: scale(1.1);
+}
+
+.signup_main_right_img {
+    position: absolute;
+    width: 50vw;
+    height: 100vh;
+    top: 0;
+    left: 50vw;
+}
+
+.signup_main_right_img img {
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(8px);
+    overflow: hidden;
+    transform: scale(1);
+}
+
+.authSubmitBtn{
+    border-radius: 50px;
+    padding: 8px;
+    background-color: #185dd2;
+    border: none;
+    color: white;
+    margin-top: 5px;
+}
+
+.authSubmitBtn {
+    cursor: pointer;
+}
+/* 
+.fieldInput{
+    border: 2px solid ;
+}
+
+.fieldInput:focus {
+    border: #185dd2;
+} */
