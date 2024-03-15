@@ -4,7 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from 'react-router-dom';
 import sidebarSignupImg from '../assets/signup_siderbar.png';
 import sidebarSignupImg2 from '../assets/signup_siderbar_3.jpg';
-import './signup.css';
+import '../Styles/signup.css';
 
 const Login = () => {
     const [userInfo, setUserInfo] = useState({
@@ -13,7 +13,8 @@ const Login = () => {
     })
 
     const [user, loading, error] = useAuthState(auth);
-
+    const [loginError, setLoginError] = useState(null); // State to store login error
+    const [errors, setErrors] = useState({ email: '', pass: '' }); // State to store form field errors
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -32,10 +33,38 @@ const Login = () => {
         }))
     }
 
-    const submitHandler = (e) => {
+    const validateForm = () => {
+        const { email, pass } = userInfo;
+        const errors = {};
+        let isValid = true;
+
+        if (!email.trim()) {
+            errors.email = 'Email is required';
+            isValid = false;
+        }
+        if (!pass.trim()) {
+            errors.pass = 'Password is required';
+            isValid = false;
+        }
+
+        setErrors(errors);
+        return isValid;
+    };
+
+    const submitHandler = async (e) => {
         e.preventDefault();
-        logInWithEmailAndPassword(userInfo.email, userInfo.pass);
-        console.log(userInfo);
+
+        if (validateForm()) {
+            try {
+                await logInWithEmailAndPassword(userInfo.email, userInfo.pass);
+                console.log(userInfo);
+            } catch (error) {
+                if (error.message === 'Invalid credentials') {
+                    setLoginError('Invalid credentials')
+                }
+                setLoginError(error.message); // Set the login error
+            }
+        }
     }
 
     return (
@@ -54,10 +83,13 @@ const Login = () => {
                         <span className='heading_border'></span>
                         <label htmlFor="email">Email</label>
                         <input type="text" name='email' onChange={changeHandler} className='fieldInput' />
-                        <label htmlFor="pass">Pass</label>
-                        <input type="pass" name='pass' onChange={changeHandler} className='fieldInput' />
+                        {errors.email && <p className="error">{errors.email}</p>} {/* Display email error message */}
+                        <label htmlFor="pass">Password</label>
+                        <input type="password" name='pass' onChange={changeHandler} className='fieldInput' /> {/* Change type to password */}
+                        {errors.pass && <p className="error">{errors.pass}</p>} {/* Display password error message */}
+                        {loginError && <p className="error">{loginError}</p>} {/* Display login error message */}
                         <button type='submit' className='authSubmitBtn'>Submit</button>
-                        <p>Don't have an account <Link to='/signup'>Signup Here</Link></p>
+                        <p className='account_exist'>Don't have an account <Link to='/signup'>Signup Here</Link></p>
                     </form>
                 </div>
             </div>

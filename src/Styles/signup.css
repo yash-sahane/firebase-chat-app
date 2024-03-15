@@ -1,26 +1,26 @@
-.signup_main{
+.signup_main {
     position: relative;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
 }
 
-.signup_absolute{
+.signup_absolute {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.heading_border{
-    content: '';
+.heading_border {
+    content: "";
     height: 2px;
     width: 20px;
     background-color: #185dd2;
     margin: 5px 0 20px 0;
 }
 
-.signup{
+.signup {
     display: flex;
     width: 100%;
     height: 75%;
@@ -30,17 +30,17 @@
     min-width: 100%;
 }
 
-.signup_left{
+.signup_left {
     width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.signup_left img{
+.signup_left img {
     /* border-radius: 30px 0 0 30px; */
 }
-.signup_right{
+.signup_right {
     display: flex;
     flex-direction: column;
     width: 50%;
@@ -49,7 +49,7 @@
     background-color: white;
 }
 
-.sidebar_signup_img{
+.sidebar_signup_img {
     max-width: 100%;
     height: auto;
     object-fit: cover;
@@ -58,34 +58,34 @@
     object-fit: cover;
 }
 
-.signup_right input{
+.signup_right input {
     padding: 5px;
     margin: 5px 0 10px 0;
     border-radius: 3px;
     outline: none;
     border-bottom: 1px solid;
     border: 2px solid #aea5a5;
-    transition: ease-in-out, border .35s ease-in-out;
+    transition: ease-in-out, border 0.35s ease-in-out;
 }
 
-.signup_right input:focus{
+.signup_right input:focus {
     border: 2px solid #185dd2;
 }
 
-label{
+label {
     font-size: 14px;
     color: black;
     font-weight: 500;
 }
 
-.avatar_label{
+.avatar_label {
     display: flex;
     align-items: center;
     margin: 5px 0 10px 0;
     cursor: pointer;
 }
 
-.avatar_label img{
+.avatar_label img {
     width: 30px;
 }
 
@@ -123,7 +123,7 @@ label{
     transform: scale(1);
 }
 
-.authSubmitBtn{
+.authSubmitBtn {
     border-radius: 50px;
     padding: 8px;
     background-color: #185dd2;
@@ -143,3 +143,30 @@ label{
 .fieldInput:focus {
     border: #185dd2;
 } */
+
+.hidden-file-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.error {
+    font-size: 14px;
+    color: #f73131;
+}
+
+.signup_right input {
+    margin-bottom: 0px;
+}
+.signup_right label {
+    margin-top: 10px;
+}
+
+.account_exist {
+    margin-top: 10px;
+}

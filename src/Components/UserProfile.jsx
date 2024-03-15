@@ -4,7 +4,7 @@ import { logoutHandler } from '../config';
 import { AuthContext } from '../Context/AuthContextProvider';
 import { FaPowerOff } from 'react-icons/fa';
 import LogoutModal from './LogoutModal';
-import './UserProfile.css';
+import '../Styles/UserProfile.css';
 
 const UserProfile = () => {
     const { currentUser } = useContext(AuthContext);

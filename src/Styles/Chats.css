@@ -27,7 +27,7 @@
     position: absolute;
     content: "";
     width: 3px;
-    height: 100px;
+    height: 100%;
     background: linear-gradient(0deg, #0395de 0%, #5d24c6 35%, #c50272 100%);
     top: 0;
     left: 0;

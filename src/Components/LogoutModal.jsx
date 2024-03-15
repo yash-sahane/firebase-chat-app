@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
-import './LogoutModal.css'; // Add a separate CSS file for styling
+import '../Styles/LogoutModal.css'; // Add a separate CSS file for styling
 
 const LogoutModal = ({ isOpen, onRequestClose, onConfirmLogout }) => {
     return (

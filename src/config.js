@@ -35,8 +35,11 @@ const logInWithEmailAndPassword = async (email, password) => {
         const response = await signInWithEmailAndPassword(auth, email, password);
         console.log(response.user);
     } catch (err) {
-        console.error(err);
-        alert(err.message);
+        if (err.code === 'auth/invalid-credential') {
+            throw new Error('Invalid credentials');
+        } else {
+            throw e;
+        }
     }
 }
 
@@ -44,6 +47,14 @@ const logInWithEmailAndPassword = async (email, password) => {
 const registerWithEmailAndPassword = async (userInfo) => {
     try {
         const { firstName, lastName, displayName, email, pass: password, avatar } = userInfo;
+
+        // Check if the display name already exists
+        const displayNameQuery = query(collection(db, "users"), where("displayName", "==", displayName));
+        const displayNameSnapshot = await getDocs(displayNameQuery);
+        if (!displayNameSnapshot.empty) {
+            throw new Error("Display name should be unique");
+        }
+
         const response = await createUserWithEmailAndPassword(auth, email, password);
         const user = response.user;
 
@@ -70,8 +81,16 @@ const registerWithEmailAndPassword = async (userInfo) => {
 
         await setDoc(doc(db, 'userChats', user.uid), {})
     } catch (e) {
+        // alert(e.message);
         console.error(e);
-        alert(e.message);
+        if (e.code === 'auth/username-already-exists') {
+            throw new Error('Display name is already in use');
+        } else if (e.code === 'auth/email-already-in-use') {
+            throw new Error('Email already in use');
+        }
+        else {
+            throw e;
+        }
     }
 }
 

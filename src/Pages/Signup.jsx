@@ -1,11 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { registerWithEmailAndPassword } from '../config';
 import { Link, useNavigate } from 'react-router-dom';
 import sidebarSignupImg from '../assets/signup_siderbar.png';
 import sidebarSignupImg2 from '../assets/signup_siderbar_3.jpg'
 import uploadImg from '../assets/addAvatar.png'
-import './signup.css';
-
+import { registerWithEmailAndPassword } from '../config';
+import '../Styles/signup.css';
 
 const Signup = () => {
     const [userInfo, setUserInfo] = useState({
@@ -16,14 +15,38 @@ const Signup = () => {
         pass: '',
         avatar: null,
     });
-
+    const [errors, setErrors] = useState({});
+    const [avatarFileName, setAvatarFileName] = useState('Add an avatar');
     const fileInputRef = useRef(null);
-
     const navigate = useNavigate();
+
+    const validateForm = () => {
+        const errors = {};
+        if (!userInfo.firstName.trim()) {
+            errors.firstName = 'First name is required';
+        }
+        if (!userInfo.lastName.trim()) {
+            errors.lastName = 'Last name is required';
+        }
+        if (!userInfo.displayName.trim()) {
+            errors.displayName = 'Display name is required';
+        }
+        if (!userInfo.email.trim()) {
+            errors.email = 'Email is required';
+        } else if (!/\S+@\S+\.\S+/.test(userInfo.email)) {
+            errors.email = 'Email is invalid';
+        }
+        if (!userInfo.pass.trim()) {
+            errors.pass = 'Password is required';
+        } else if (userInfo.pass.length < 8) {
+            errors.pass = 'Password must be at least 8 characters';
+        }
+        setErrors(errors);
+        return Object.keys(errors).length === 0;
+    };
 
     const changeHandler = (e) => {
         const { value, name } = e.target;
-
         setUserInfo((prev) => ({
             ...prev,
             [name]: value,
@@ -36,18 +59,40 @@ const Signup = () => {
             ...prev,
             avatar: file,
         }));
+        setAvatarFileName(file.name); // Set the file name
     };
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        try {
-            await registerWithEmailAndPassword(userInfo);
-            console.log('User registered successfully!');
+        let hasError = false;
+        if (validateForm()) {
+            try {
+                await registerWithEmailAndPassword(userInfo);
+            } catch (error) {
+                if (error.message === 'Email already in use') {
+                    setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        email: 'Email is already in use',
+                    }));
+                } else if (error.message === 'Display name should be unique') {
+                    setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        displayName: 'Display name should be unique'
+                    }))
+                } else {
+                    // alert(error.message);
+                    console.error(error);
+                }
+                hasError = true;
+            }
+        } else {
+            hasError = true;
+        }
+        if (!hasError) {
             navigate('/');
-        } catch (e) {
-            console.error(e.message);
         }
     };
+
 
     return (
         <div className='signup_main'>
@@ -64,30 +109,34 @@ const Signup = () => {
                         <h3 className='authHeading'>Registration</h3>
                         <span className='heading_border'></span>
                         <label htmlFor="firstName">First Name</label>
-                        <input type="text" name="firstName" onChange={changeHandler} />
+                        <input type="text" name="firstName" onChange={changeHandler} placeholder='Enter first name' />
+                        {errors.firstName && <p className="error">{errors.firstName}</p>}
                         <label htmlFor="lastName">Last Name</label>
-                        <input type="text" name="lastName" onChange={changeHandler} />
+                        <input type="text" name="lastName" onChange={changeHandler} placeholder='Enter last name' />
+                        {errors.lastName && <p className="error">{errors.lastName}</p>}
                         <label htmlFor="displayName">Display Name</label>
-                        <input type="text" name="displayName" onChange={changeHandler} />
+                        <input type="text" name="displayName" onChange={changeHandler} placeholder='Enter display name' />
+                        {errors.displayName && <p className="error">{errors.displayName}</p>}
                         <label htmlFor="email">Email</label>
-                        <input type="text" name="email" onChange={changeHandler} />
+                        <input type="text" name="email" onChange={changeHandler} placeholder='Enter email' />
+                        {errors.email && <p className="error">{errors.email}</p>}
                         <label htmlFor="pass">Password</label>
-                        <input type="password" name="pass" onChange={changeHandler} />
+                        <input type="password" name="pass" onChange={changeHandler} placeholder='Enter password' />
+                        {errors.pass && <p className="error">{errors.pass}</p>}
                         <label htmlFor="avatar" className="avatar_label">
                             <img src={uploadImg} alt="Upload Avatar" />
-                            <span>Add an avatar</span>
+                            <span>{avatarFileName}</span> {/* Dynamically display the file name */}
                         </label>
                         <input
                             ref={fileInputRef}
-                            required
                             type="file"
                             id="avatar"
                             accept="image/*"
                             onChange={fileChangeHandler}
-                            style={{ display: 'none' }}
+                            className="hidden-file-input"
                         />
                         <button className='authSubmitBtn' type="submit">Submit</button>
-                        <p>Already have an account <Link to='/login'>Signin</Link></p>
+                        <p className='account_exist'>Already have an account <Link to='/login'>Signin</Link></p>
                     </form>
                 </div>
             </div>

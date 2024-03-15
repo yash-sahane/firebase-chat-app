@@ -9,10 +9,10 @@
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     display: flex;
     width: fit-content;
-    max-width: 50%;
     min-width: 100px;
     position: relative;
     overflow: hidden;
+    /* max-width: 50%; */
 }
 .msg_hr_line {
     position: absolute;
@@ -43,4 +43,21 @@
     font-size: 12px;
     color: #9c9a9a;
     padding: 0 0 0 10px;
+}
+
+.msg_txt_img_div {
+    display: flex;
+    flex-direction: column;
+}
+
+.msg_txt_img_div img {
+    width: 200px;
+}
+
+.img_msg {
+    margin-top: 10px;
+}
+
+.ownerMsg .msg_txt_img_div {
+    align-items: flex-end;
 }

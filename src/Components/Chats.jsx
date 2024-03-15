@@ -3,10 +3,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../Context/AuthContextProvider';
 import { db } from '../config';
 import { ChatContext } from '../Context/ChatContextProvider';
-import './Chats.css';
 import SearchUser from './SearchUser';
 import UserProfile from './UserProfile';
 import { calculateTimeAgo } from '../Util/TimeAgo';
+import '../Styles/Chats.css';
 
 const Chats = () => {
     const [chats, setChats] = useState([]);
@@ -26,7 +26,6 @@ const Chats = () => {
     }, [currentUser.uid]);
 
     const addChatHandler = (user) => {
-        console.log(user);
         dispatch({ type: 'CHANGE_USER', payload: user });
     }
 
@@ -55,7 +54,7 @@ const Chats = () => {
                                         {calculateTimeAgo(chat.date)}
                                     </p>
                                 </div>
-                                <p className='users_chat_lastMsg'>{'> ' + chat.lastMessage?.message}</p>
+                                {chat?.lastMessage?.message && <p className='users_chat_lastMsg'>{'> ' + chat.lastMessage?.message}</p>}
                             </div>
                         </div>
                     ))}

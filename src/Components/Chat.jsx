@@ -2,11 +2,10 @@ import React, { useContext } from 'react';
 import { ChatContext } from '../Context/ChatContextProvider';
 import Messages from './Messages';
 import SendMessage from './SendMessage';
-import './Chat.css';
+import '../Styles/Chat.css';
 
 const Chat = () => {
     const { data } = useContext(ChatContext);
-    console.log(data.user);
 
     return (
         <div className='user_chat_active'>
