@@ -83,12 +83,15 @@ const SearchUser = () => {
         <div className='search_user' ref={searchedUserRef}>
             <CiSearch className='search_user_icon' />
             <input type="search" name='search' placeholder='Search user' value={username} onKeyDown={keyHandler} onChange={(e) => setUsername(e.target.value)} />
-            {user && <div className='searched_user' onClick={userClickHandler}>
+            {user ? <div className='searched_user' onClick={userClickHandler}>
                 <div className='profile_img_div searched_profile_div'>
                     <img src={user.photoURL} alt="" className='user_profile_img searched_profile_img' />
                 </div>
                 <p>{user.displayName}</p>
-            </div>}
+            </div> :
+                <div className='searched_user'>
+                    <p>No user found</p>
+                </div>}
         </div>
     )
 }
