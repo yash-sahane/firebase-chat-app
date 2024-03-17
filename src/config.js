@@ -33,7 +33,6 @@ const storage = getStorage(app);
 const logInWithEmailAndPassword = async (email, password) => {
     try {
         const response = await signInWithEmailAndPassword(auth, email, password);
-        console.log(response.user);
     } catch (err) {
         if (err.code === 'auth/invalid-credential') {
             throw new Error('Invalid credentials');
@@ -60,7 +59,6 @@ const registerWithEmailAndPassword = async (userInfo) => {
 
         let avatarURL = null;
         if (avatar) {
-            console.log(avatar);
             avatarURL = await uploadAvatar(displayName, avatar);
         }
 
@@ -87,6 +85,8 @@ const registerWithEmailAndPassword = async (userInfo) => {
             throw new Error('Display name is already in use');
         } else if (e.code === 'auth/email-already-in-use') {
             throw new Error('Email already in use');
+        } else if (e.code === 'auth/invalid-email') {
+            throw new Error('Invalid email');
         }
         else {
             throw e;
@@ -102,10 +102,6 @@ const uploadAvatar = async (displayName, avatarFile) => {
 
     // Get the download URL
     const downloadURL = await getDownloadURL(storageRef);
-
-    // Update the user's avatar URL in the Firestore database
-    console.log('Avatar uploaded successfully:', downloadURL);
-
     return downloadURL;
 
 };

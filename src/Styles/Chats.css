@@ -10,6 +10,11 @@
 
 .users_chats {
     flex: 1;
+    overflow-y: scroll;
+}
+
+.users_chats::-webkit-scrollbar {
+    width: 0;
 }
 
 .users_chat {

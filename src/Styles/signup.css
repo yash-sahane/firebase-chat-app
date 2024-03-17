@@ -5,6 +5,21 @@
     overflow: hidden;
 }
 
+.reg_loading {
+    display: flex;
+    gap: 5px;
+}
+
+/* .loading_icon {
+    width: 20px;
+    height: 20px;
+} */
+
+.loading_icon_div {
+    display: flex;
+    align-items: center;
+}
+
 .signup_absolute {
     position: absolute;
     top: 50%;

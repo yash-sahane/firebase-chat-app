@@ -5,23 +5,20 @@ import { Link, useNavigate } from 'react-router-dom';
 import sidebarSignupImg from '../assets/signup_siderbar.png';
 import sidebarSignupImg2 from '../assets/signup_siderbar_3.jpg';
 import '../Styles/signup.css';
+import Loading from '../UI/Loading';
 
 const Login = () => {
     const [userInfo, setUserInfo] = useState({
         email: '',
         pass: ''
     })
-
-    const [user, loading, error] = useAuthState(auth);
+    const [loading, setLoading] = useState(false);
+    const [user, error] = useAuthState(auth);
     const [loginError, setLoginError] = useState(null); // State to store login error
     const [errors, setErrors] = useState({ email: '', pass: '' }); // State to store form field errors
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (loading) {
-            // maybe trigger a loading screen
-            return;
-        }
         if (user) navigate("/");
     }, [user, loading])
 
@@ -55,6 +52,7 @@ const Login = () => {
         e.preventDefault();
 
         if (validateForm()) {
+            setLoading(true);
             try {
                 await logInWithEmailAndPassword(userInfo.email, userInfo.pass);
                 console.log(userInfo);
@@ -63,6 +61,8 @@ const Login = () => {
                     setLoginError('Invalid credentials')
                 }
                 setLoginError(error.message); // Set the login error
+            } finally {
+                setLoading(false);
             }
         }
     }
@@ -79,8 +79,15 @@ const Login = () => {
                         <img src={sidebarSignupImg} alt="" className='sidebar_signup_img' />
                     </div>
                     <form action="" onSubmit={submitHandler} className='signup_right'>
-                        <h3 className='authHeading'>Login</h3>
-                        <span className='heading_border'></span>
+                        <div className='reg_loading'>
+                            <div>
+                                <h3 className='authHeading'>Registration </h3>
+                                <span className='heading_border'></span>
+                            </div>
+                            <div className='loading_icon_div'>
+                                {loading && <Loading />}
+                            </div>
+                        </div>
                         <label htmlFor="email">Email</label>
                         <input type="text" name='email' onChange={changeHandler} className='fieldInput' />
                         {errors.email && <p className="error">{errors.email}</p>} {/* Display email error message */}

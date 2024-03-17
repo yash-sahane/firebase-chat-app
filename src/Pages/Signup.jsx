@@ -4,6 +4,7 @@ import sidebarSignupImg from '../assets/signup_siderbar.png';
 import sidebarSignupImg2 from '../assets/signup_siderbar_3.jpg'
 import uploadImg from '../assets/addAvatar.png'
 import { registerWithEmailAndPassword } from '../config';
+import Loading from '../UI/Loading';
 import '../Styles/signup.css';
 
 const Signup = () => {
@@ -17,6 +18,7 @@ const Signup = () => {
     });
     const [errors, setErrors] = useState({});
     const [avatarFileName, setAvatarFileName] = useState('Add an avatar');
+    const [loading, setLoading] = useState(false); // Add loading state
     const fileInputRef = useRef(null);
     const navigate = useNavigate();
 
@@ -66,8 +68,10 @@ const Signup = () => {
         e.preventDefault();
         let hasError = false;
         if (validateForm()) {
+            setLoading(true); // Set loading to true
             try {
                 await registerWithEmailAndPassword(userInfo);
+                navigate('/'); // Navigate on successful registration
             } catch (error) {
                 if (error.message === 'Email already in use') {
                     setErrors((prevErrors) => ({
@@ -79,17 +83,22 @@ const Signup = () => {
                         ...prevErrors,
                         displayName: 'Display name should be unique'
                     }))
-                } else {
-                    // alert(error.message);
+                }
+                else if (error.message === 'Invalid email') {
+                    setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        email: 'Invalid email'
+                    }))
+                }
+                else {
                     console.error(error);
                 }
                 hasError = true;
+            } finally {
+                setLoading(false); // Set loading to false regardless of success or error
             }
         } else {
             hasError = true;
-        }
-        if (!hasError) {
-            navigate('/');
         }
     };
 
@@ -106,8 +115,15 @@ const Signup = () => {
                         <img src={sidebarSignupImg} alt="" className='sidebar_signup_img' />
                     </div>
                     <form onSubmit={submitHandler} className='signup_right'>
-                        <h3 className='authHeading'>Registration</h3>
-                        <span className='heading_border'></span>
+                        <div className='reg_loading'>
+                            <div>
+                                <h3 className='authHeading'>Registration </h3>
+                                <span className='heading_border'></span>
+                            </div>
+                            <div className='loading_icon_div'>
+                                {loading && <Loading />}
+                            </div>
+                        </div>
                         <label htmlFor="firstName">First Name</label>
                         <input type="text" name="firstName" onChange={changeHandler} placeholder='Enter first name' />
                         {errors.firstName && <p className="error">{errors.firstName}</p>}
@@ -125,7 +141,7 @@ const Signup = () => {
                         {errors.pass && <p className="error">{errors.pass}</p>}
                         <label htmlFor="avatar" className="avatar_label">
                             <img src={uploadImg} alt="Upload Avatar" />
-                            <span>{avatarFileName}</span> {/* Dynamically display the file name */}
+                            <span>{avatarFileName}</span>
                         </label>
                         <input
                             ref={fileInputRef}
@@ -135,7 +151,11 @@ const Signup = () => {
                             onChange={fileChangeHandler}
                             className="hidden-file-input"
                         />
-                        <button className='authSubmitBtn' type="submit">Submit</button>
+                        {loading ? (
+                            <p>Loading...</p>
+                        ) : (
+                            <button className='authSubmitBtn' type="submit">Submit</button>
+                        )}
                         <p className='account_exist'>Already have an account <Link to='/login'>Signin</Link></p>
                     </form>
                 </div>
