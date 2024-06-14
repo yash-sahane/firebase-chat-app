@@ -51,7 +51,7 @@ const Login = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
 
-        if (validateForm()) {
+        if (validateForm()) {  
             setLoading(true);
             try {
                 await logInWithEmailAndPassword(userInfo.email, userInfo.pass);
